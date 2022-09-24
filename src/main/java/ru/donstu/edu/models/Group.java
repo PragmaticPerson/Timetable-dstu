@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Audience {
+public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class Audience {
     @Column
     private String name;
 
-    public Audience(int id, String name) {
+    public Group(int id, String name) {
         super();
         this.id = id;
         this.name = name;
@@ -55,7 +55,7 @@ public class Audience {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Audience other = (Audience) obj;
+        Group other = (Group) obj;
         if (id != other.id)
             return false;
         if (name == null) {
