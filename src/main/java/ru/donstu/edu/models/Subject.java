@@ -16,6 +16,10 @@ public class Subject {
     @Column
     private String name;
 
+    public Subject() {
+        super();
+    }
+
     public Subject(int id, String name) {
         super();
         this.id = id;

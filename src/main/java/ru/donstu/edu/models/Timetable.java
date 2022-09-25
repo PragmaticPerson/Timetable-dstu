@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Timetable {
@@ -18,26 +19,36 @@ public class Timetable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @JoinColumn(name = "groupId")
+    @ManyToOne
+    @JoinColumn(name = "group_id")
     private Group group;
 
-    @JoinColumn(name = "audienceId")
+    @ManyToOne
+    @JoinColumn(name = "audience_id", referencedColumnName = "id")
     private Audience audience;
 
-    @JoinColumn(name = "teacherId")
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @JoinColumn(name = "subjectId")
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    @Column
+    @Column(name = "lesson_date")
     private LocalDate date;
 
+    @Column(name = "day")
     @Enumerated(EnumType.STRING)
     private Weekdays day;
 
+    @Column(name = "lesson_number")
     @Enumerated(EnumType.STRING)
     private LessonNumber number;
+
+    public Timetable() {
+        super();
+    }
 
     public Timetable(Group group, Audience audience, Teacher teacher, Subject subject, LocalDate date, Weekdays day,
             LessonNumber number) {

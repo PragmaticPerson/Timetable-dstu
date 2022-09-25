@@ -16,6 +16,10 @@ public class Audience {
     @Column
     private String name;
 
+    public Audience() {
+        super();
+    }
+
     public Audience(int id, String name) {
         super();
         this.id = id;

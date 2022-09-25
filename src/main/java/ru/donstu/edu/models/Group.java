@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "study_group")
 public class Group {
 
     @Id
@@ -15,6 +15,10 @@ public class Group {
 
     @Column
     private String name;
+
+    public Group() {
+        super();
+    }
 
     public Group(int id, String name) {
         super();

@@ -19,6 +19,10 @@ public class Teacher {
     @Column
     private String rank;
 
+    public Teacher() {
+        super();
+    }
+
     public Teacher(int id, String name, String rank) {
         super();
         this.id = id;
