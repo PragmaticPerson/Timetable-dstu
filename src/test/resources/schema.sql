@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS study_group CASCADE;
 CREATE TABLE audience
 (
    id SERIAL PRIMARY KEY,
-   name CHARACTER VARYING (6) NOT NULL
+   name CHARACTER VARYING (10) NOT NULL
 );
 CREATE TABLE study_group
 (
@@ -33,11 +33,9 @@ CREATE TABLE timetable
    subject_id INTEGER NOT NULL,
    lesson_date DATE NOT NULL,
    day CHARACTER VARYING (10) NOT NULL,
-   lesson_number CHARACTER VARYING (10) NOT NULL,
+   lesson_number INTEGER NOT NULL,
    CONSTRAINT group_fkey FOREIGN KEY (group_id) REFERENCES study_group (id) ON DELETE CASCADE,
    CONSTRAINT teacher_fkey FOREIGN KEY (teacher_id) REFERENCES teacher (id) ON DELETE CASCADE,
    CONSTRAINT audience_fkey FOREIGN KEY (audience_id) REFERENCES audience (id) ON DELETE CASCADE,
    CONSTRAINT subject_fkey FOREIGN KEY (subject_id) REFERENCES subject (id) ON DELETE CASCADE
 );
-INSERT INTO audience (name) VALUES ('1-124А'),
-('3-314');

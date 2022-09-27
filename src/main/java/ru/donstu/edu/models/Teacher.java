@@ -23,9 +23,8 @@ public class Teacher {
         super();
     }
 
-    public Teacher(int id, String name, String rank) {
+    public Teacher(String name, String rank) {
         super();
-        this.id = id;
         this.name = name;
         this.rank = rank;
     }

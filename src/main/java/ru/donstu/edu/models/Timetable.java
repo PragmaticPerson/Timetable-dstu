@@ -2,6 +2,7 @@ package ru.donstu.edu.models;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Timetable {
 
     @Id
@@ -23,15 +27,15 @@ public class Timetable {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "audience_id", referencedColumnName = "id")
     private Audience audience;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
@@ -43,7 +47,6 @@ public class Timetable {
     private Weekdays day;
 
     @Column(name = "lesson_number")
-    @Enumerated(EnumType.STRING)
     private LessonNumber number;
 
     public Timetable() {
@@ -60,6 +63,11 @@ public class Timetable {
         this.date = date;
         this.day = day;
         this.number = number;
+    }
+
+    public TimetableElement makeElement() {
+        return new TimetableElement(subject.getName(), teacher.getId(), teacher.getName(), audience.getId(),
+                audience.getName(), number.getStart(), number.getEnd());
     }
 
     public int getId() {

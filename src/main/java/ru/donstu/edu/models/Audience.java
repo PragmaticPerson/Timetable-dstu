@@ -20,9 +20,8 @@ public class Audience {
         super();
     }
 
-    public Audience(int id, String name) {
+    public Audience(String name) {
         super();
-        this.id = id;
         this.name = name;
     }
 

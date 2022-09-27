@@ -20,9 +20,8 @@ public class Subject {
         super();
     }
 
-    public Subject(int id, String name) {
+    public Subject(String name) {
         super();
-        this.id = id;
         this.name = name;
     }
 
