@@ -35,13 +35,13 @@ public class AdminRestController {
         return groupRepository.findAll();
     }
 
-    @GetMapping(path = "/timetable/${group}/update")
+    @GetMapping(path = "/timetable/{group}/update")
     public List<TimetableResponce> updateTimetable(@PathVariable("group") int id) throws IOException {
         updateService.updateTimetable();
         return timetableService.getTimetableForGroup(id);
     }
 
-    @GetMapping(path = "/timetable/${group}")
+    @GetMapping(path = "/timetable/{group}")
     public List<TimetableResponce> getTimetable(@PathVariable("group") int id) {
         return timetableService.getTimetableForGroup(id);
     }
