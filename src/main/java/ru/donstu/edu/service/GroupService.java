@@ -1,5 +1,7 @@
 package ru.donstu.edu.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ public class GroupService {
     public GroupService(GroupJpaRepository repository) {
         super();
         this.repository = repository;
+    }
+    
+    public List<Group> findAll() {
+        return repository.findAll();
     }
 
     public Group save(Group group) {
