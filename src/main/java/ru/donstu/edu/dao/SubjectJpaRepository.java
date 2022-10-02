@@ -6,4 +6,5 @@ import ru.donstu.edu.models.Subject;
 
 public interface SubjectJpaRepository extends JpaRepository<Subject, Integer> {
 
+    public Subject findByName(String name);
 }

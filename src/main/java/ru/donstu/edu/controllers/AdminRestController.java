@@ -37,7 +37,7 @@ public class AdminRestController {
 
     @GetMapping(path = "/timetable/{group}/update")
     public List<TimetableResponce> updateTimetable(@PathVariable("group") int id) throws IOException {
-        updateService.updateTimetable();
+        updateService.updateTimetable(id);
         return timetableService.getTimetableForGroup(id);
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.donstu.edu.dao.TimetableJpaRepository;
 import ru.donstu.edu.models.Group;
@@ -20,6 +21,15 @@ public class TimetableService {
     public TimetableService(TimetableJpaRepository repository) {
         super();
         this.repository = repository;
+    }
+
+    public Timetable save(Timetable timetable) {
+        return repository.save(timetable);
+    }
+
+    @Transactional
+    public void deleteForGroup(int id) {
+        repository.deleteAllByGroup(id);
     }
 
     public List<TimetableResponce> getTimetableForGroup(int groupId) {

@@ -6,4 +6,5 @@ import ru.donstu.edu.models.Teacher;
 
 public interface TeacherJpaRepository extends JpaRepository<Teacher, Integer> {
 
+    public Teacher findByName(String name);
 }

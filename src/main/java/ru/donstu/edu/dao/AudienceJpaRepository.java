@@ -6,4 +6,5 @@ import ru.donstu.edu.models.Audience;
 
 public interface AudienceJpaRepository extends JpaRepository<Audience, Integer> {
 
+    public Audience findByName(String name);
 }

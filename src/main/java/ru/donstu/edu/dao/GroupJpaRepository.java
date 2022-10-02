@@ -6,4 +6,5 @@ import ru.donstu.edu.models.Group;
 
 public interface GroupJpaRepository extends JpaRepository<Group, Integer> {
 
+    public Group findByName(String name);
 }

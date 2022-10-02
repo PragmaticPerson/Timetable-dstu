@@ -3,14 +3,13 @@ package ru.donstu.edu.service;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import ru.donstu.edu.dao.GroupJpaRepository;
-import ru.donstu.edu.dao.TimetableJpaRepository;
 import ru.donstu.edu.models.Audience;
 import ru.donstu.edu.models.Group;
 import ru.donstu.edu.models.LessonNumber;
@@ -23,16 +22,22 @@ import ru.donstu.edu.models.Weekdays;
 public class UpdateDatabaseService {
 
     private DataReceiver receiver;
-    private GroupJpaRepository groupRepository;
-    private TimetableJpaRepository timetableRepository;
+    private AudienceService audienceService;
+    private SubjectService subjectService;
+    private TeacherService teacherService;
+    private GroupService groupService;
+    private TimetableService timetableService;
 
     @Autowired
-    public UpdateDatabaseService(DataReceiver receiver, GroupJpaRepository groupRepository,
-            TimetableJpaRepository timetableRepository) {
+    public UpdateDatabaseService(DataReceiver receiver, AudienceService audienceService, SubjectService subjectService,
+            TeacherService teacherService, GroupService groupService, TimetableService timetableService) {
         super();
         this.receiver = receiver;
-        this.groupRepository = groupRepository;
-        this.timetableRepository = timetableRepository;
+        this.audienceService = audienceService;
+        this.subjectService = subjectService;
+        this.teacherService = teacherService;
+        this.groupService = groupService;
+        this.timetableService = timetableService;
     }
 
     public void updateGroups() throws IOException {
@@ -41,42 +46,47 @@ public class UpdateDatabaseService {
         node = node.get("data").get("groups");
 
         node.forEach(g -> {
-            String name = g.get("groupName").textValue().trim();
             int id = g.get("groupID").asInt();
+            String name = g.get("groupName").textValue().trim();
 
-            groupRepository.save(new Group(id, name));
+            groupService.save(new Group(id, name));
         });
     }
 
-    public void updateTimetable() throws IOException {
+    public void updateTimetable(int id) throws IOException {
+        timetableService.deleteForGroup(id);
+        Group group = groupService.getById(id);
+
         LocalDate thisWeek = LocalDate.now().with(DayOfWeek.MONDAY);
         LocalDate nextWeek = thisWeek.plusDays(7);
 
-        Group group = groupRepository.getById(44394);
-        
-        JsonNode node = receiver.getTimetable(group, thisWeek);
+        for (LocalDate week : Arrays.asList(thisWeek, nextWeek)) {
+            JsonNode node = receiver.getTimetable(group, week);
 
-        node = node.get("data").get("rasp");
+            node = node.get("data").get("rasp");
 
-        node.forEach(t -> {
-            Subject subject = new Subject(t.get("дисциплина").textValue().trim());
+            node.forEach(t -> {
+                Timetable timetable = parceJson(t);
+                timetable.setGroup(group);
 
-            Teacher teacher = new Teacher(t.get("преподаватель").textValue().trim(),
-                    t.get("должность").textValue().trim());
+                timetableService.save(timetable);
+            });
+        }
+    }
 
-            Audience audience = new Audience(t.get("аудитория").textValue().trim());
+    private Timetable parceJson(JsonNode t) {
+        Subject subject = subjectService.getByName(t.get("дисциплина").textValue().trim());
+        Teacher teacher = teacherService.getByName(t.get("преподаватель").textValue().trim());
+        Audience audience = audienceService.getByName(t.get("аудитория").textValue().trim());
+        Timetable timetable = new Timetable();
 
-            Timetable timetable = new Timetable();
+        timetable.setAudience(audience);
+        timetable.setTeacher(teacher);
+        timetable.setSubject(subject);
+        timetable.setDate(LocalDate.parse(t.get("дата").textValue().split("T")[0]));
+        timetable.setDay(Weekdays.findByName(t.get("день_недели").textValue()));
+        timetable.setNumber(LessonNumber.findByStart(t.get("начало").textValue()));
 
-            timetable.setAudience(audience);
-            timetable.setTeacher(teacher);
-            timetable.setSubject(subject);
-            timetable.setGroup(group);
-            timetable.setDate(LocalDate.parse(t.get("дата").textValue().split("T")[0]));
-            timetable.setDay(Weekdays.findByName(t.get("день_недели").textValue()));
-            timetable.setNumber(LessonNumber.findByStart(t.get("начало").textValue()));
-
-            timetableRepository.save(timetable);
-        });
+        return timetable;
     }
 }
