@@ -16,17 +16,13 @@ public class Teacher {
     @Column
     private String name;
 
-    @Column
-    private String rank;
-
     public Teacher() {
         super();
     }
 
-    public Teacher(String name, String rank) {
+    public Teacher(String name) {
         super();
         this.name = name;
-        this.rank = rank;
     }
 
     public int getId() {
@@ -45,21 +41,12 @@ public class Teacher {
         this.name = name;
     }
 
-    public String getRank() {
-        return rank;
-    }
-
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + id;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((rank == null) ? 0 : rank.hashCode());
         return result;
     }
 
@@ -78,11 +65,6 @@ public class Teacher {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
-            return false;
-        if (rank == null) {
-            if (other.rank != null)
-                return false;
-        } else if (!rank.equals(other.rank))
             return false;
         return true;
     }
