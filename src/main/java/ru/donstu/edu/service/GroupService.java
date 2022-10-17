@@ -2,6 +2,8 @@ package ru.donstu.edu.service;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class GroupService {
         super();
         this.repository = repository;
     }
-    
+
     public List<Group> findAll() {
         return repository.findAll();
     }
@@ -26,15 +28,15 @@ public class GroupService {
     public Group save(Group group) {
         return repository.save(group);
     }
-    
+
     public Group getById(int id) {
-        return repository.getById(id);
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("No entity with id " + id));
     }
 
     public Group getByName(String name) {
         Group group = repository.findByName(name);
         if (group == null) {
-            group = repository.save(new Group(name));
+            group = save(new Group(name));
         }
         return group;
     }

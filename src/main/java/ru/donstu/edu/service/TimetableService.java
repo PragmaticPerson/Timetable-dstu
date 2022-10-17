@@ -15,11 +15,13 @@ import ru.donstu.edu.models.TimetableResponce;
 @Service
 public class TimetableService {
 
+    private GroupService groupService;
     private TimetableJpaRepository repository;
 
     @Autowired
-    public TimetableService(TimetableJpaRepository repository) {
+    public TimetableService(GroupService groupService, TimetableJpaRepository repository) {
         super();
+        this.groupService = groupService;
         this.repository = repository;
     }
 
@@ -33,11 +35,18 @@ public class TimetableService {
     }
 
     public List<TimetableResponce> getTimetableForGroup(int groupId) {
-        var timetables = repository.findByGroupOrderByDateAscNumber(new Group(groupId, ""));
+        Group group = groupService.getById(groupId);
+        var timetables = repository.findByGroupOrderByDateAscNumber(group);
+
+        return convertToResponce(timetables);
+    }
+
+    private List<TimetableResponce> convertToResponce(List<Timetable> timetables) {
         List<TimetableResponce> responces = new ArrayList<>();
 
         Timetable last = null;
         var responce = new TimetableResponce();
+
         for (var t : timetables) {
             if (last != null) {
                 if (last.getDate().equals(t.getDate())) {
@@ -50,7 +59,6 @@ public class TimetableService {
             } else {
                 fillResponce(responce, t);
             }
-
             last = t;
         }
         responces.add(responce);
