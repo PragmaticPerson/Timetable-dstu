@@ -7,12 +7,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import ru.donstu.edu.models.Audience;
 import ru.donstu.edu.models.Group;
 import ru.donstu.edu.models.Timetable;
 
 public interface TimetableJpaRepository extends JpaRepository<Timetable, Integer> {
 
     List<Timetable> findByGroupOrderByDateAscNumber(Group group);
+    
+    List<Timetable> findByAudienceOrderByDateAscNumber(Audience audience);
 
     @Modifying
     @Query("DELETE FROM Timetable t WHERE t.group.id = :id")

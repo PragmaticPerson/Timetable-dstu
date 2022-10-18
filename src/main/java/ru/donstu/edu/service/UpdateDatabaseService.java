@@ -5,6 +5,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ import ru.donstu.edu.models.Weekdays;
 @Service
 public class UpdateDatabaseService {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private DataReceiver receiver;
     private AudienceService audienceService;
     private SubjectService subjectService;
@@ -41,6 +44,7 @@ public class UpdateDatabaseService {
     }
 
     public void updateGroups() throws IOException {
+        logger.info("Update groups list");
         JsonNode node = receiver.getGroups();
 
         node = node.get("data").get("groups");
@@ -54,6 +58,7 @@ public class UpdateDatabaseService {
     }
 
     public void updateTimetable(int id) throws IOException {
+        logger.info("Update timetable for group with id '{}'", id);
         timetableService.deleteForGroup(id);
         Group group = groupService.getById(id);
 
@@ -68,6 +73,8 @@ public class UpdateDatabaseService {
             node.forEach(t -> {
                 Timetable timetable = parceJson(t);
                 timetable.setGroup(group);
+
+                logger.debug("Ready to save timetable entity: {}", timetable);
 
                 timetableService.save(timetable);
             });

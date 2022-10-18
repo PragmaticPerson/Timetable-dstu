@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import ru.donstu.edu.models.Group;
 @Service
 public class GroupService {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private GroupJpaRepository repository;
 
     @Autowired
@@ -34,8 +37,11 @@ public class GroupService {
     }
 
     public Group getByName(String name) {
+        logger.debug("Getting group with name '{}'", name);
+
         Group group = repository.findByName(name);
         if (group == null) {
+            logger.debug("No group with name '{}' exist. Creating such", name);
             group = save(new Group(name));
         }
         return group;
