@@ -69,4 +69,9 @@ public class Audience {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Audience [id=" + id + ", name=" + name + "]";
+    }
+
 }
