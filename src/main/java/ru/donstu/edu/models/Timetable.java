@@ -42,7 +42,7 @@ public class Timetable {
     @Column(name = "lesson_date")
     private LocalDate date;
 
-    @Column(name = "day")
+    @Column(name = "day_week")
     @Enumerated(EnumType.STRING)
     private Weekdays day;
 
