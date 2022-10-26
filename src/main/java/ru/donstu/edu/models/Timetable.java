@@ -53,6 +53,19 @@ public class Timetable {
         super();
     }
 
+    public Timetable(int id, Group group, Audience audience, Teacher teacher, Subject subject, LocalDate date,
+            Weekdays day, LessonNumber number) {
+        super();
+        this.id = id;
+        this.group = group;
+        this.audience = audience;
+        this.teacher = teacher;
+        this.subject = subject;
+        this.date = date;
+        this.day = day;
+        this.number = number;
+    }
+
     public Timetable(Group group, Audience audience, Teacher teacher, Subject subject, LocalDate date, Weekdays day,
             LessonNumber number) {
         super();

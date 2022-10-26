@@ -20,6 +20,12 @@ public class Teacher {
         super();
     }
 
+    public Teacher(int id, String name) {
+        super();
+        this.id = id;
+        this.name = name;
+    }
+
     public Teacher(String name) {
         super();
         this.name = name;
