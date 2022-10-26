@@ -8,8 +8,8 @@
     <subject id="2" name="Subject two" />
     <study_group id="1" name="Group one" />
     <study_group id="2" name="Group two" />
-    <timetable id="1" group_id="1" audience_id="1" teacher_id="1" subject_id="1" lesson_date="2022-10-03" day_week="Monday" lesson_number="1" />
-    <timetable id="2" group_id="1" audience_id="2" teacher_id="2" subject_id="2" lesson_date="2022-10-05" day_week="Wednesday" lesson_number="6" />
-    <timetable id="3" group_id="2" audience_id="2" teacher_id="1" subject_id="2" lesson_date="2022-10-06" day_week="Thursday" lesson_number="7" />
-    <timetable id="4" group_id="2" audience_id="1" teacher_id="2" subject_id="1" lesson_date="2022-10-02" day_week="Tuesday" lesson_number="3" />
+    <timetable id="1" group_id="1" audience_id="1" teacher_id="1" subject_id="1" lesson_date="2022-10-03" day_week="MONDAY" lesson_number="1" />
+    <timetable id="2" group_id="1" audience_id="2" teacher_id="2" subject_id="2" lesson_date="2022-10-05" day_week="WEDNESDAY" lesson_number="6" />
+    <timetable id="3" group_id="2" audience_id="2" teacher_id="1" subject_id="2" lesson_date="2022-10-06" day_week="THURSDAY" lesson_number="7" />
+    <timetable id="4" group_id="2" audience_id="1" teacher_id="2" subject_id="1" lesson_date="2022-10-02" day_week="TUESDAY" lesson_number="3" />
 </dataset>
