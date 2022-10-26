@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <timetable id="3" group_id="2" audience_id="2" teacher_id="1" subject_id="2" lesson_date="2022-10-06" day_week="THURSDAY" lesson_number="7" />
+    <timetable id="4" group_id="2" audience_id="1" teacher_id="2" subject_id="1" lesson_date="2022-10-02" day_week="TUESDAY" lesson_number="3" />
+</dataset>
